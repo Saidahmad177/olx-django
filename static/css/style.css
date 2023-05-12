@@ -1,0 +1,21 @@
+body{
+    box-sizing: border-box;
+    font-family: 'Roboto', Arial, sans-serif !important;
+    color: #002f34;
+}
+.search-field{background: #f2f4f5}
+
+input {border: #fff; width: 80%; border-radius: 1px}
+input:focus-visible {outline: none}
+
+.search-button{padding: 10px; font-family: 'Roboto', Arial, sans-serif !important;}
+.search-button:hover{background-color: #002f34; color: #fff}
+@media (max-width:991px) {
+    input{width: 60%}
+
+}
+
+input:valid + button {
+  background-color: #002f34;
+  color: #fff;
+}
