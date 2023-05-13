@@ -1,6 +1,7 @@
+
 body{
     box-sizing: border-box;
-    font-family: 'Roboto', Arial, sans-serif !important;
+    font-family: 'Roboto', Arial, sans-serif;
     color: #002f34;
 }
 .search-field{background: #f2f4f5}
@@ -19,3 +20,9 @@ input:valid + button {
   background-color: #002f34;
   color: #fff;
 }
+
+.nav-btn{color: #fff;}
+.nav-btn:hover{color: #a3acb0}
+
+.add-btn{color: #002f34; padding: 10px 22px 10px 22px}
+
