@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div>
+        <h2 class="my-4">E'lon joylashtirish</h2>
+        <hr>
+    </div>
+    <div class="">
+        <h5 class="mb-4">Bizga e'loningiz haqida gapirib bering</h5>
+        <form action="" method="post">{% csrf_token %}
+            <div class="post-add-form">
+                <div class="mb-4">
+                    <input type="text" name="title" placeholder="Sarlavhani kiriting*" required>
+                </div>
+                <div class="mb-4">
+                    <select class="styled-select" name="category" required>
+                    <option selected>Kategoriyani tanlang*</option>
+                    {% for category in all_category %}
+                        <option value="{{ category.id }}" name="category">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                </div>
+                <div class="price-input">
+                    <input name="price" type="number" min="1" max="99999999999999999" placeholder="Narx*" required>
+                    <select class="styled-select" name="currency" id="">
+                        <option value="So'm">So'm</option>
+                        <option value="$">$</option>
+                    </select>
+                </div>
+                    <div class="row">
+                        <h5 class="my-3">Rasmlar</h5>
+                        <p>Birinchi surat e’loningiz asosiy rasmi bo’ladi.</p>
+                        <div class="dropzone mt-3 mx-2 col-lg-3 col-sm-6 col-6">
+                            <span><i class="fa-regular fa-image upload-icon"></i></span>
+                            <input type="file" name="image" class="upload-input" />
+                        </div>
+                        <div class="dropzone mt-3 mx-2 col-lg-3 col-sm-6 col-6">
+                            <span><i class="fa-regular fa-image upload-icon"></i></span>
+                            <input type="file" name="image2" class="upload-input" />
+                        </div>
+                        <div class="dropzone mt-3 mx-2 col-lg-3 col-sm-6 col-6">
+                            <span><i class="fa-regular fa-image upload-icon"></i></span>
+                            <input type="file" name="image3" class="upload-input" />
+                        </div>
+                        <div class="dropzone mt-3 mx-2 col-lg-3 col-sm-6 col-6">
+                            <span><i class="fa-regular fa-image upload-icon"></i></span>
+                            <input type="file" name="image4" class="upload-input" />
+                        </div>
+                    </div>
+                <textarea name="description" id="" cols="30" rows="10" placeholder="Tavsif*" required></textarea>
+                <h5>Joylashuv</h5>
+                <div class="mb-4">
+                    <select class="styled-select" name="category_city" id="">
+                        {% for city in citys %}
+                            <option value="{{ city.id }}">{{ city.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="phone-number mb-4">
+                    <h5>Telefon raqami </h5>
+                    <input type="text" name="phone_number" placeholder="Masalan, 987654321" required>
+                </div>
+                <button class="button post-add-btn" type="submit">E'lon joylashtirish</button>
+
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}

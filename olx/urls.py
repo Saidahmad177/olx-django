@@ -1,12 +1,13 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
-from olx.views import home
+from olx.views import HomePageView
 
 urlpatterns = [
-    path('', home, name='home'),
+    path('', HomePageView.as_view(), name='home'),
+    path('ads/', include('ads.urls')),
     path('admin/', admin.site.urls),
 ]
 

@@ -1,16 +1,55 @@
 {% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
 
 {% block content %}
     <div class="search-field">
         <form action="">
             <div class="input-group search-field-inline">
-                <input type="search" class="px-3 py-3" placeholder="{{ elon }} e'lonlar yoningizda" required aria-label="Search" aria-describedby="search-addon" />
+                <input type="search" class="px-3 py-3" placeholder="{{ elon|intcomma }} e'lonlar yoningizda" required aria-label="Search" aria-describedby="search-addon" />
                 <button class="btn btn-light search-button" type="submit">Qidiruv <i class="fas fa-search"></i></button>
             </div>
         </form>
     </div>
-    <div class="">
+    <div class="py-3">
         <h2 class="text-center my-3">Bosh toifalar</h2>
-    <button class="button">Submit</button>
     </div>
+    <div class="image-container">
+    {% for category in all_category %}
+        <figure class="mx-3">
+            <a href=""><img class="cat-img" src="{{ category.image.url }}" width="70" height="70" alt="Image 1"></a>
+            <figcaption><a href="">{{ category.name }}</a></figcaption>
+        </figure>
+    {% endfor %}
+    </div>
+    <div class="empty-ad">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12">
+                <h1>This Is The Place For Your Ad</h1>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" style="background: #f2f4f5">
+        {% for ad in ads %}
+            <div class="col-lg-3 col-sm-6 col-6 mb-4">
+              <div class="card">
+                {% if ad.image %}
+                    <img class="card-img-top card-image" src="{{ ad.image }}">
+                {% else %}
+                    <img class="card-img-top card-image" src="{% static 'images/olx-logo.png' %}">
+                {% endif %}
+                <div class="card-body">
+                  <h5 class="card-title mb-4">{{ ad.title }}</h5>
+                  <p class="card-text">Toshkent</p>
+                  <p>-{{ ad.created_time }}</p>
+                    <p>{{ ad.price }} {{ ad.currency }}</p>
+                </div>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
 {% endblock %}
