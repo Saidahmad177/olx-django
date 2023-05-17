@@ -15,12 +15,12 @@
         <h2 class="text-center my-3">Bosh toifalar</h2>
     </div>
     <div class="image-container">
-    {% for category in all_category %}
-        <figure class="mx-3">
-            <a href=""><img class="cat-img" src="{{ category.image.url }}" width="70" height="70" alt="Image 1"></a>
-            <figcaption><a href="">{{ category.name }}</a></figcaption>
-        </figure>
-    {% endfor %}
+        {% for category in all_category %}
+            <figure class="mx-3">
+                <a class="a-rm-bg" href=""><img class="cat-img" src="{{ category.image.url }}" width="70" height="70" alt="Image 1"></a>
+                <figcaption class="mt-3"><a href="">{{ category.name }}</a></figcaption>
+            </figure>
+        {% endfor %}
     </div>
     <div class="empty-ad">
         <div class="row">
@@ -28,17 +28,26 @@
                 <h1>This Is The Place For Your Ad</h1>
             </div>
         </div>
-
     </div>
-
+    <div class="my-4">
+        <h1>ENG OXIRGI E'LONLAR</h1>
+    </div>
     <div class="row" style="background: #f2f4f5">
         {% for ad in ads %}
             <div class="col-lg-3 col-sm-6 col-6 mb-4">
               <div class="card">
-                  <img class="card-img-top card-image" src="{{ ad.image.url }}" alt="">
+                  <a class="a-rm-bg" href="{% url 'ads:detail' ad.category.slug ad.slug %}">
+                      <img class="card-img-top card-image" src="{{ ad.image.url }}" alt="">
+                  </a>
                   <div class="card-body">
-                      <h5 class="card-title mb-4">{{ ad.title|truncatechars:48 }}</h5>
-                              <p class="card-text">{{ ad.category_city.name }}</p>
+                      <div class="card-head-title">
+                              <h6 class="card-title mb-4">
+                                  <a href="{% url 'ads:detail' ad.category.slug ad.slug %}">
+                                      {{ ad.title|truncatechars:52 }}
+                                  </a>
+                              </h6>
+                      </div>
+                      <p class="card-text">{{ ad.category_city.name }}</p>
                       <p>-{{ ad.created_time }}</p>
                       <p>{{ ad.price }} {{ ad.currency }}</p>
                   </div>

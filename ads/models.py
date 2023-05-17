@@ -27,7 +27,7 @@ class CategoryCity(models.Model):
 
 class Ad(models.Model):
     title = models.CharField(max_length=200, null=False)
-    slug = models.SlugField(max_length=100)
+    slug = models.SlugField(max_length=100, unique=True)
     price = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(999999999999)])
     currency = models.CharField(max_length=50)
     image = models.ImageField(upload_to='ads/', default='default_img.jpg')
@@ -41,9 +41,17 @@ class Ad(models.Model):
     phone_number = models.IntegerField()
 
     def save(self, *args, **kwargs):
+        super(Ad, self).save(*args, **kwargs)
+
         if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
+            self.slug = slugify(self.title) + f"-{self.id}"
+            self.save()
+
+        # else:
+        #     existing_slug = self.slug
+        #     new_slug = slugify(self.title)
+        #     if new_slug != existing_slug:
+        #         self.slug = f"{new_slug}-{self.id}"
 
     def __str__(self):
         return self.title

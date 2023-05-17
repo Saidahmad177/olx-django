@@ -36,7 +36,7 @@ class CreateAd(View):
 class DetailAdView(View):
     def get(self, request, category, slug):
         item = Ad.objects.get(slug=slug)
-        category = Category.objects.get(name=category)
+        category = Category.objects.get(slug=category)
 
         context = {
             'detail': item,
