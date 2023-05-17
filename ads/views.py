@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 
 from ads.forms import AdForm
-from ads.models import Category, CategoryCity
+from ads.models import Category, CategoryCity, Ad
 
 
 class CreateAd(View):
@@ -18,16 +18,28 @@ class CreateAd(View):
         return render(request, 'ads/CRUD/create_ad.html', context)
 
     def post(self, request):
-        forms = AdForm(request.POST)
+        form = AdForm(data=request.POST, files=request.FILES)
         price = request.POST.get('category')
         print(price, '---------=========')
-        if forms.is_valid():
-            forms.save()
+        if form.is_valid():
+            form.save()
             messages.success(
                 request,
                 "E'loningiz muvofaqqiyatli joylashtirildi.")
             return redirect('home')
 
         else:
-            print(forms.errors)
+            messages.info(request, "Barcha qiymatlarni to'g'ri kiritganingizga ishonch hosil qiling", extra_tags='danger')
             return redirect('ads:create')
+
+
+class DetailAdView(View):
+    def get(self, request, category, slug):
+        item = Ad.objects.get(slug=slug)
+        category = Category.objects.get(name=category)
+
+        context = {
+            'detail': item,
+            'category': category,
+        }
+        return render(request, 'ads/detail.html', context)

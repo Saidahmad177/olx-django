@@ -2,13 +2,24 @@
 
 
 {% block content %}
+{#    {% if form.errors %}#}
+{#    <div class="alert alert-danger alert-dismissible fade show" role="alert">#}
+{#        {{ form.title.errors }}#}
+{#        {{ form.category.errors }}#}
+{#        {{ form.price.errors }}#}
+{#        {{ form.currency.errors }}#}
+{#        {{ form.currency.errors }}#}
+{#        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>#}
+{#    </div>#}
+{##}
+{#    {% endif %}#}
     <div>
         <h2 class="my-4">E'lon joylashtirish</h2>
         <hr>
     </div>
     <div class="">
         <h5 class="mb-4">Bizga e'loningiz haqida gapirib bering</h5>
-        <form action="" method="post">{% csrf_token %}
+        <form method="post" enctype="multipart/form-data">{% csrf_token %}
             <div class="post-add-form">
                 <div class="mb-4">
                     <input type="text" name="title" placeholder="Sarlavhani kiriting*" required>

@@ -6,7 +6,13 @@ from django.utils.text import slugify
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     image = models.ImageField(upload_to='category/', blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -22,7 +28,7 @@ class CategoryCity(models.Model):
 class Ad(models.Model):
     title = models.CharField(max_length=200, null=False)
     slug = models.SlugField(max_length=100)
-    price = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(18)])
+    price = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(999999999999)])
     currency = models.CharField(max_length=50)
     image = models.ImageField(upload_to='ads/', default='default_img.jpg')
     image2 = models.ImageField(upload_to='ads/', default='default_img.jpg')

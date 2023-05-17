@@ -35,17 +35,13 @@
         {% for ad in ads %}
             <div class="col-lg-3 col-sm-6 col-6 mb-4">
               <div class="card">
-                {% if ad.image %}
-                    <img class="card-img-top card-image" src="{{ ad.image }}">
-                {% else %}
-                    <img class="card-img-top card-image" src="{% static 'images/olx-logo.png' %}">
-                {% endif %}
-                <div class="card-body">
-                  <h5 class="card-title mb-4">{{ ad.title }}</h5>
-                  <p class="card-text">Toshkent</p>
-                  <p>-{{ ad.created_time }}</p>
-                    <p>{{ ad.price }} {{ ad.currency }}</p>
-                </div>
+                  <img class="card-img-top card-image" src="{{ ad.image.url }}" alt="">
+                  <div class="card-body">
+                      <h5 class="card-title mb-4">{{ ad.title|truncatechars:48 }}</h5>
+                              <p class="card-text">{{ ad.category_city.name }}</p>
+                      <p>-{{ ad.created_time }}</p>
+                      <p>{{ ad.price }} {{ ad.currency }}</p>
+                  </div>
               </div>
             </div>
         {% endfor %}
