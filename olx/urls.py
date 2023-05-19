@@ -3,12 +3,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from olx.views import HomePageView
+from olx.views import HomePageView, SearchPageView
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
     path('ads/', include('ads.urls')),
     path('admin/', admin.site.urls),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('search/', SearchPageView.as_view(), name='search'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

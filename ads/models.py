@@ -2,6 +2,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Category(models.Model):
@@ -28,13 +29,13 @@ class CategoryCity(models.Model):
 class Ad(models.Model):
     title = models.CharField(max_length=200, null=False)
     slug = models.SlugField(max_length=100, unique=True)
-    price = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(999999999999)])
+    price = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(999999999999)])
     currency = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='ads/', default='default_img.jpg')
-    image2 = models.ImageField(upload_to='ads/', default='default_img.jpg')
-    image3 = models.ImageField(upload_to='ads/', default='default_img.jpg')
-    image4 = models.ImageField(upload_to='ads/', default='default_img.jpg')
-    description = models.TextField(max_length=9000)
+    image = models.ImageField(upload_to='ads/', null=True, blank=True)
+    image2 = models.ImageField(upload_to='ads/', null=True, blank=True)
+    image3 = models.ImageField(upload_to='ads/', null=True, blank=True)
+    image4 = models.ImageField(upload_to='ads/', null=True, blank=True)
+    description = RichTextUploadingField(max_length=9000)
     created_time = models.DateTimeField(auto_now=timezone.now)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     category_city = models.ForeignKey(CategoryCity, on_delete=models.CASCADE)

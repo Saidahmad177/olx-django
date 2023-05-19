@@ -1,60 +1,65 @@
 {% extends 'base.html' %}
 {% load humanize %}
 {% load static %}
+{% load custom_filters %}
 
 {% block content %}
-    <div class="search-field">
-        <form action="">
-            <div class="input-group search-field-inline">
-                <input type="search" class="px-3 py-3" placeholder="{{ elon|intcomma }} e'lonlar yoningizda" required aria-label="Search" aria-describedby="search-addon" />
-                <button class="btn btn-light search-button" type="submit">Qidiruv <i class="fas fa-search"></i></button>
-            </div>
-        </form>
-    </div>
-    <div class="py-3">
-        <h2 class="text-center my-3">Bosh toifalar</h2>
-    </div>
-    <div class="image-container">
-        {% for category in all_category %}
-            <figure class="mx-3">
-                <a class="a-rm-bg" href=""><img class="cat-img" src="{{ category.image.url }}" width="70" height="70" alt="Image 1"></a>
-                <figcaption class="mt-3"><a href="">{{ category.name }}</a></figcaption>
-            </figure>
-        {% endfor %}
-    </div>
-    <div class="empty-ad">
-        <div class="row">
-            <div class="col-lg-12 col-sm-12">
-                <h1>This Is The Place For Your Ad</h1>
+    <div class="container">
+        <div class="search-field">
+            <form action="{% url 'search' %}" method="get" role="search">
+                <div class="input-group search-field-inline">
+                    <input type="search" class="px-3 py-3" name="q" placeholder=" e'lonlar yoningizda" required aria-label="Search" aria-describedby="search-addon" />
+                    <button class="btn btn-light search-button" type="submit">Qidiruv <i class="fas fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+        <div style="background: #fff" class="py-4">
+            <h2 class="text-center my-3 py-3 pb-3">Bosh toifalar</h2>
+            <div class="image-container px-3">
+                {% for category in all_category %}
+                    <figure class="mx-3">
+                        <a class="a-rm-bg" href=""><img class="cat-img" src="{{ category.image.url }}" width="70" height="70" alt="Image 1"></a>
+                        <figcaption class="mt-3"><a href="">{{ category.name }}</a></figcaption>
+                    </figure>
+                {% endfor %}
             </div>
         </div>
-    </div>
-    <div class="my-4">
-        <h1>ENG OXIRGI E'LONLAR</h1>
-    </div>
-    <div class="row" style="background: #f2f4f5">
-        {% for ad in ads %}
-            <div class="col-lg-3 col-sm-6 col-6 mb-4">
-              <div class="card">
-                  <a class="a-rm-bg" href="{% url 'ads:detail' ad.category.slug ad.slug %}">
-                      <img class="card-img-top card-image" src="{{ ad.image.url }}" alt="">
-                  </a>
-                  <div class="card-body">
-                      <div class="card-head-title">
-                              <h6 class="card-title mb-4">
-                                  <a href="{% url 'ads:detail' ad.category.slug ad.slug %}">
-                                      {{ ad.title|truncatechars:52 }}
-                                  </a>
-                              </h6>
-                      </div>
-                      <p class="card-text">{{ ad.category_city.name }}</p>
-                      <p>-{{ ad.created_time }}</p>
-                      <p>{{ ad.price }} {{ ad.currency }}</p>
-                  </div>
-              </div>
+        <div class="empty-ad">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                    <h1>This Is The Place For Your Ad</h1>
+                </div>
             </div>
-        {% endfor %}
+        </div>
+        <hr>
+        <div class="my-4 text-center">
+            <h1>ENG OXIRGI E'LONLAR</h1>
+        </div>
+        <div class="row">
+            {% for ad in ads %}
+                <div class="col-lg-3 col-sm-6 col-6 mb-4">
+                  <div class="card">
+                      <a class="a-rm-bg" href="{% url 'ads:detail' ad.category.slug ad.slug %}">
+                          <img class="card-img-top card-image"
+                          src="{% if ad.image %}{{ ad.image.url }}
+                          {% else %}{% static 'images/default_img.jpg' %}
+                          {% endif %}" alt="">
+                      </a>
+                      <div class="card-body">
+                          <div class="card-head-title">
+                                  <h6 class="card-title mb-4">
+                                      <a href="{% url 'ads:detail' ad.category.slug ad.slug %}">
+                                          {{ ad.title|truncatechars:52 }}
+                                      </a>
+                                  </h6>
+                          </div>
+                          <p class="card-text mb-1">{{ ad.category_city.name }} - {{ ad.created_time|date:'Y-m-d' }}</p>
+                          <p><b>{{ ad.price|intcomma|replace_comma }} {{ ad.currency }}</b></p>
+                      </div>
+                  </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-
 
 {% endblock %}

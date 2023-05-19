@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="search-field">
+            <form action="{% url 'search' %}" method="get" role="search">
+                <div class="input-group search-field-inline">
+                    <input type="search" class="px-3 py-3" name="q" placeholder=" e'lonlar yoningizda" required aria-label="Search" aria-describedby="search-addon" />
+                    <button class="btn btn-light search-button" type="submit">Qidiruv <i class="fas fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+
+        {% if search_result_count %}
+            <h3>Biz {{ search_result_count }} e'lon topdik</h3>
+        {% else %}
+            <h3>So'rovingiz bo'yicha hech qanday natija topilmadi...</h3>
+        {% endif %}
+
+        {% for result in search_results %}
+            <div class="row my-3 cat-item">
+                <div class="col-lg-3 col-md-4 col-sm-5 col-5">
+                    {% if result.image %}
+                        <a href="{% url 'ads:detail' result.category.slug result.slug %}">
+                            <img src="{{ result.image.url }}" alt="">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'ads:detail' result.category.slug result.slug %}">
+                            <img src="{% static 'images/default_img.jpg' %}" alt="">
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-7 col-7">
+                    <h5><a href="{% url 'ads:detail' result.category.slug result.slug %}">{{ result.title|truncatechars:150 }}</a></h5>
+                    <div class="p-test-t">
+                        <p class="pt-2"><b>{{ result.price }} {{ result.currency }}</b></p>
+                    </div>
+                    <p><small>{{ result.category_city.name }} - {{ result.created_time|date:'Y-m-d' }}</small></p>
+                </div>
+            </div>
+       {% endfor %}
+    </div>
+
+{% endblock %}
