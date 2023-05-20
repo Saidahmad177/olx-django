@@ -1,4 +1,6 @@
 {% load static %}
+{% load socialaccount %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,9 +35,23 @@
                           {% endfor %}
                       </div>
                   {% endif %}
+                <h5 class="fw-normal mb-2 pb-2 text-center">Tizimga kirish</h5>
+              <i class="google-icon"></i>
+{#                {% providers_media_js %}#}
+{#                {% if 'google' in socialaccount.providers %}#}
+                    <a class="a-rm-bg" href="{% provider_login_url 'google' %}?next=/"><button class="button social-btn"><i class="google-icon"></i> Google orqali kirish</button></a>
+{#              {% endif %}#}
+              <a href="{% url 'account_signup' %}?process=signup&provider=google">Sign up with Google</a>
+                  <a href="{% url 'account_signup' %}">Sign in with Google</a>
+
+                  <form method="post" action="{% url 'account_signup' %}?process=signup&provider=google">{% csrf_token %}
+                  <!-- form fields -->
+                  <button type="submit">Sign up with Google</button>
+              </form>
+
+              <div class="mb-3 pb-3"></div>
 
                 <form method="post" action="{% url 'users:login' %}"> {% csrf_token %}
-                  <h5 class="fw-normal mb-3 pb-3 text-center">Tizimga kirish</h5>
                     <div class="row mb-4">
                         <div class="col-6">
                             <h6 class="text-center"><a href="{% url 'users:login' %}" class="a-rm-bg"><u>Kirish</u></a></h6>

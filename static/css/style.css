@@ -1,3 +1,4 @@
+
 *{box-sizing: border-box; font-family: Roboto, Arial, sans-serif}
 html, body{height: 100%}
 body{background-color: #f2f4f5}
@@ -98,6 +99,16 @@ footer hr{height: 2px; background-color: black}
 
 .login-btn{border-radius: 3px; width: 100%; padding: 10px 0; box-shadow: inset 0 0 0 5px #002f34;}
 .login-btn:hover{background: #fff; color: #002f34}
+.social-btn{border-radius: 3px; background: #fff; color: #002f34; width: 100%; padding: 10px 0; box-shadow: inset 0 0 0 4px #002f34;}
+.social-btn:hover{box-shadow: inset 0 0 0 5px #002f34}
+.google-icon{background: url("icon-goole.png");
+      height: 17px;
+  width: 14px;
+  /*display: block;*/
+    display: inline-block;
+    margin-top: 6px;
+  /* Other styles here */
+}
 
 @media (max-width:991px) {
     .body-div{min-height: 50%}

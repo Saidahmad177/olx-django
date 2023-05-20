@@ -21,6 +21,7 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
+SITE_ID = 1
 
 # Application definition
 
@@ -49,9 +50,24 @@ INSTALLED_APPS = [
 
 
 ]
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
-LOGIN_URL = 'users:login'
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+    },
+}
+
 LOGIN_REDIRECT_URL = 'users:login'
+LOGOUT_REDIRECT_URL = '/'
+
+# core/settings.py
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -224,3 +240,8 @@ CKEDITOR_CONFIGS = {
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = {
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+}
