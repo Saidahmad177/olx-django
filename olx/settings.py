@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django.contrib.sites',
 
     # local app
     'ads',
@@ -40,7 +41,17 @@ INSTALLED_APPS = [
     # external
     'ckeditor',
     'hitcount',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+
 ]
+
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'users:login'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

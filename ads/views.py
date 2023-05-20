@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 from hitcount.utils import get_hitcount_model
@@ -8,7 +9,7 @@ from ads.forms import AdForm
 from ads.models import Category, CategoryCity, Ad
 
 
-class CreateAd(View):
+class CreateAd(LoginRequiredMixin, View):
     def get(self, request):
         all_category = Category.objects.all()
         citys = CategoryCity.objects.all()
@@ -69,7 +70,7 @@ class DetailAdView(View):
 class CategoryItems(View):
     def get(self, request, category):
         selected_category = Category.objects.get(slug=category)
-        category_items = Ad.objects.filter(category=selected_category.id)
+        category_items = Ad.objects.filter(category=selected_category.id).order_by('-id')
 
         context = {
             'category_items': category_items,

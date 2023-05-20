@@ -8,7 +8,7 @@
         <div class="search-field">
             <form action="{% url 'search' %}" method="get" role="search">
                 <div class="input-group search-field-inline">
-                    <input type="search" class="px-3 py-3" name="q" placeholder=" e'lonlar yoningizda" required aria-label="Search" aria-describedby="search-addon" />
+                    <input type="search" class="px-3 py-3" name="q" placeholder="{{ global_ad_count }} e'lonlar yoningizda" required aria-label="Search" aria-describedby="search-addon" />
                     <button class="btn btn-light search-button" type="submit">Qidiruv <i class="fas fa-search"></i></button>
                 </div>
             </form>
@@ -18,8 +18,8 @@
             <div class="image-container px-3">
                 {% for category in all_category %}
                     <figure class="mx-3">
-                        <a class="a-rm-bg" href=""><img class="cat-img" src="{{ category.image.url }}" width="70" height="70" alt="Image 1"></a>
-                        <figcaption class="mt-3"><a href="">{{ category.name }}</a></figcaption>
+                        <a class="a-rm-bg" href="{% url 'ads:category' category.slug %}"><img class="cat-img" src="{{ category.image.url }}" width="70" height="70" alt="Image 1"></a>
+                        <figcaption class="mt-3"><a href="{% url 'ads:category' category.slug %}">{{ category.name }}</a></figcaption>
                     </figure>
                 {% endfor %}
             </div>
