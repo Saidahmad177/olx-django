@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sizning e'lonlaringiz - {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="my-4">Sizning e'lonlaringiz</h1>
+        <hr>
+        {% if user_ads %}
+            {% for user_ad in user_ads %}
+            <div class="row my-3 cat-item">
+                <div class="col-lg-3 col-md-4 col-sm-5 col-5">
+                    {% if user_ad.image %}
+                        <a class="a-rm-bg" href="{% url 'ads:detail' user_ad.category.slug user_ad.slug %}">
+                            <img src="{{ user_ad.image.url }}" alt="user ad image">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'ads:detail' user_ad.category.slug user_ad.slug %}">
+                            <img src="{% static 'images/default_img.jpg' %}" alt="user ad image">
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-7 col-7">
+                    <h5><a href="{% url 'ads:detail' user_ad.category.slug user_ad.slug %}">{{ user_ad.title }}</a></h5>
+                    <p><b>{{ user_ad.price }} {{ user_ad.currency }}</b></p>
+                    <p><small>{{ user_ad.category_city.name }} - {{ user_ad.created_time|date:'Y-m-d' }}</small></p>
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+            <div class="center">
+                <img src="{% static 'images/ad-list.svg' %}" alt="">
+                <h4><b>Sizda hali e'lonlar mavjud emas</b></h4>
+                <a class="a-rm-bg" href="{% url 'ads:create' %}"><button class="button login-btn">E'lon joylashtirish</button></a>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

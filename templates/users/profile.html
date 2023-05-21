@@ -1,53 +1,36 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Foydalanuvchi profili {% endblock %}
+{% block title %} Foydalanuvchi profili -  {% endblock %}
 
 {% block content %}
-
-{#    <div class="container">#}
-{#        <div class="row p-4" style="background: #fff">#}
-{#            <div class="col-1">#}
-{#                <img src="{% static 'images/avatar.jpg' %}" style="border-radius: 50%" width="80" height="80" alt="profile image">#}
-{#            </div>#}
-{#            <div class="col-3 mt-3 ms-2">#}
-{#                <h2><b>username</b></h2>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-
     <div class="container">
         <h1 class="my-3">Foydalanuvchi profili ma'lumotlari</h1>
-        <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        <form method="post">{% csrf_token %}
             <div class="post-add-form">
                 <div class="p-3" style="background: #fff;">
                     <div class="mb-4 px-4 pt-3">
                         <h5>Ismingiz</h5>
-                        <input type="text" name="title" value="{{ user.first_name }}" placeholder="Ismingiz" required>
+                        <input type="text" name="first_name" value="{{ user.first_name }}" placeholder="Ismingiz">
                     </div>
                     <div class="mb-4 px-4">
                         <h5>Familiyangiz</h5>
-                        <input type="text" name="title" value="{{ request.user.last_name }}" placeholder="Familiyangiz" required>
+                        <input type="text" name="last_name" value="{{ request.user.last_name }}" placeholder="Familiyangiz">
                     </div>
                     <div class="mb-4 px-4">
                         <h5>Username</h5>
-                        <input type="text" name="title" value="{{ request.user.username }}" placeholder="Username" required>
+                        <input id="username_id" type="text" name="username" value="{{ request.user.username }}" placeholder="Username" required  oninvalid="this.setCustomValidity('Bu maydonni to\'ldirish talab etiladi')" oninput="setCustomValidity('')">
+                        {% if form.username.errors %}
+                            <p class="text-danger">{{ form.username.errors|striptags }}</p>
+                            <script>document.getElementById('username_id').focus();</script>
+                        {% endif %}
                     </div>
                     <div class="mb-4 px-4">
                         <h5>Email</h5>
-                        <input type="email" name="title" value="{{ request.user.email }}" placeholder="Email" required>
+                        <input type="email" name="email" value="{{ request.user.email }}" placeholder="Email">
                     </div>
                     <div style="background: #fff;" class="mt-4 p-4">
-
-                        <div class="phone-number mb-4">
-                            <h5>Telefon raqami </h5>
-                            <input type="text" name="phone_number" id="phone_num" min="9" max="9" placeholder="Masalan, 987654321" required>
-    {#                        {% if form.phone_number.errors %}#}
-    {#                            <p class="text-danger">{{ form.phone_number.errors|striptags }}</p>#}
-    {#                            <script>document.getElementById('phone_num').focus();</script>#}
-    {#                        {% endif %}#}
-                        </div>
-                        <button class="button post-add-btn" type="submit">E'lon joylashtirish</button>
+                        <button class="button post-add-btn" type="submit">Saqlash</button>
                     </div>
                 </div>
 

@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.utils.text import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 
+from users.models import CustomUser
+
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
@@ -27,6 +29,7 @@ class CategoryCity(models.Model):
 
 
 class Ad(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, null=False)
     slug = models.SlugField(max_length=100, unique=True)
     price = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(999999999999)])

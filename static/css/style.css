@@ -109,7 +109,14 @@ footer hr{height: 2px; background-color: black}
 .dropdown ul > li:hover{background: #002f34; color: #fff;}
 .dropdown ul > li:hover a{color: #fff;}
 
+.center {display: block; margin-top: 40px; margin-left: auto; margin-right: auto; width: 40%;}
+.center img{margin-left: 80px; margin-top: 40px}
+.center h4{margin: 40px 50px 20px}
+.center button{width: 50%; margin-left: 50px; margin-bottom: 80px}
 
+.show-user-search input{width: 50%; padding: 22px 10px}
+.search-field-2{width: 60%; margin: 40px 0}
+.search-field-2 button{width: 30%}
 
 @media (max-width:991px) {
     .body-div{min-height: 50%}
@@ -131,6 +138,14 @@ footer hr{height: 2px; background-color: black}
     .p-test-t{float: none;}
     .login-page{height: 0}
     .login-page card{height: 100%; width: 100%;}
+    .center{width: 80%}
+    .center img{margin: auto 60px 40px;}
+    .center h4{margin: auto auto 30px;}
+    .center button{margin-left: 70px}
+    .show-user-search input{width: 76%}
+    .search-field-2{width: 100%}
+    .search-field-2 button{width: 70%; margin-left: 50px}
+
 
 }
 @media (max-width: 1199px) {

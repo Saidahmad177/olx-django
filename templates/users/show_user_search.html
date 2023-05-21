@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+
+        <div class="row p-4" style="background: #fff">
+            <div class="col-lg-1 col-sm-3 col-5">
+                <img src="{% static 'images/avatar.jpg' %}" style="border-radius: 50%" width="80" height="80" alt="profile image">
+            </div>
+            <div class="col-lg-3 col-sm-7 col-7 mt-3 ms-2">
+                <h2><b>username</b></h2>
+            </div>
+        </div>
+        <h5 class="mt-5">Shu sahifada qidirish</h5>
+        <form method="get" action="{% url 'users:show_user' user_id.id user_id.username %}" role="search">
+            <div class="input-group show-user-search">
+                <input name="q" type="search" placeholder="Qidiruv" required aria-label="Search" aria-describedby="search-addon">
+                <button class="btn btn-light search-button" type="submit">Qidiruv</button>
+            </div>
+        </form>
+
+        {% if search_result %}
+            {% for result in search_result %}
+                <div class="row my-3 cat-item">
+                    <div class="col-lg-3 col-md-4 col-sm-5 col-5">
+                        {% if result.image %}
+                            <a href="{% url 'ads:detail' result.category.slug result.slug %}">
+                                <img src="{{ result.image.url }}" alt="">
+                            </a>
+                        {% else %}
+                            <a href="{% url 'ads:detail' result.category.slug result.slug %}">
+                                <img src="{% static 'images/default_img.jpg' %}" alt="">
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-sm-7 col-7">
+                        <h5><a href="{% url 'ads:detail' result.category.slug result.slug %}">{{ result.title|truncatechars:150 }}</a></h5>
+                        <div class="p-test-t">
+                            <p class="pt-2"><b>{{ result.price }} {{ result.currency }}</b></p>
+                        </div>
+                        <p><small>{{ result.category_city.name }} - {{ result.created_time|date:'Y-m-d' }}</small></p>
+                    </div>
+                </div>
+           {% endfor %}
+        {% else %}
+            <div class="search-field-2">
+                <h3 class="mb-4">So'rovingiz bo'yicha hech qanday natija topilmadi...</h3>
+                <a class="a-rm-bg" href="{% url 'users:show_user' user_id.id user_id.username %}"><button class="button login-btn">Orqaga qaytish</button></a>
+            </div>
+
+        {% endif %}
+    </div>
+
+{% endblock %}

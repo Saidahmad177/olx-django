@@ -25,7 +25,9 @@ class CreateAd(LoginRequiredMixin, View):
         price = request.POST.get('category')
         print(price, '---------=========')
         if form.is_valid():
-            form.save()
+            ad = form.save(commit=False)
+            ad.user = request.user
+            ad.save()
             messages.success(
                 request,
                 "E'loningiz muvofaqqiyatli joylashtirildi.")

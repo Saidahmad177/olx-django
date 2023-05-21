@@ -27,3 +27,18 @@ class RegisterForm(forms.ModelForm):
         user.save()
 
         return user
+
+
+class ProfileForm(forms.ModelForm):
+    username = forms.CharField(
+        error_messages={
+            'required': "Bu maydonni to'ldirish talab etiladi",
+            'unique': 'Bunday username allaqachon mavjud!',
+            'invalid': "Iltimos to'g'ri qiymat kiriting. "
+                       "Faqat harflar, raqamlar va @/./+/-/_ belgilaridan iborat bo'lishi mumkin.",
+        }
+    )
+
+    class Meta:
+        model = CustomUser
+        fields = ('first_name', 'last_name', 'username', 'email')
