@@ -1,10 +1,11 @@
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.views import View
 
 from users.forms import RegisterForm
+from users.models import CustomUser
 
 
 class SignUpView(View):
@@ -40,3 +41,13 @@ class SignInView(View):
             messages.info(request, "Noto'g'ri Username yoki parol!", extra_tags='danger')
             return render(request, 'users/login.html', {'form': form})
 
+
+class ProfileView(View):
+    def get(self, request):
+        return render(request, 'users/profile.html')
+
+
+def logout_user(request):
+    messages.success(request, "Tizimdan chiqdingiz")
+    logout(request)
+    return redirect('home')

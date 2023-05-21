@@ -35,21 +35,24 @@
                           {% endfor %}
                       </div>
                   {% endif %}
-                <h5 class="fw-normal mb-2 pb-2 text-center">Tizimga kirish</h5>
-              <i class="google-icon"></i>
-{#                {% providers_media_js %}#}
-{#                {% if 'google' in socialaccount.providers %}#}
-                    <a class="a-rm-bg" href="{% provider_login_url 'google' %}?next=/"><button class="button social-btn"><i class="google-icon"></i> Google orqali kirish</button></a>
-{#              {% endif %}#}
-              <a href="{% url 'account_signup' %}?process=signup&provider=google">Sign up with Google</a>
-                  <a href="{% url 'account_signup' %}">Sign in with Google</a>
-
-                  <form method="post" action="{% url 'account_signup' %}?process=signup&provider=google">{% csrf_token %}
-                  <!-- form fields -->
-                  <button type="submit">Sign up with Google</button>
-              </form>
-
-              <div class="mb-3 pb-3"></div>
+                  <h5 class="fw-normal mb-2 pb-2 text-center">Tizimga kirish</h5>
+                  <div class="mb-2">
+                      <a class="a-rm-bg" href="{% provider_login_url 'facebook' %}?next=/">
+                          <button class="button social-btn">
+                              <img width="24" height="24" src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" style="margin-right: 5px; margin-bottom: 3px">
+                              Facebook orqali kirish
+                          </button>
+                      </a>
+                  </div>
+                  <div>
+                      <a class="a-rm-bg" href="{% provider_login_url 'google' %}?next=/">
+                          <button class="button social-btn">
+                              <img width="22" height="22" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" style="margin-right: 5px; margin-bottom: 3px">
+                              Google orqali kirish
+                          </button>
+                      </a>
+                  </div>
+                  <div class="mb-3 pb-3"></div>
 
                 <form method="post" action="{% url 'users:login' %}"> {% csrf_token %}
                     <div class="row mb-4">

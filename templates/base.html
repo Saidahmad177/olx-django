@@ -32,14 +32,37 @@
       <div class="offcanvas-body">
       <ul class="navbar-nav me-auto mt-1 mb-3 mb-lg-0">
         <li class="nav-item">
-          <a href="#" class="nav-link me-5 nav-btn">
+          <a href="#" class="nav-link me-5 nav-btn a-rm-bg">
               <i class="fa-regular fa-comment me-3"></i>Xabarlar
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link nav-btn">
-              <i class="fa-regular fa-user me-3"></i>Hisobingiz
-          </a>
+
+            <div class="nav-item dropdown">
+              {% if request.user.is_authenticated %}
+                  <div class="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <a href="#" class="nav-link nav-btn dropdown-toggle a-rm-bg">
+                          <i class="fa-regular fa-user me-3"></i>Hisobingiz
+                      </a>
+                  </div>
+              {% else %}
+                      <a href="{% url 'users:login' %}" class="nav-link nav-btn a-rm-bg">
+                          <i class="fa-regular fa-user me-3"></i>Hisobingiz
+                      </a>
+              {% endif %}
+              {% if request.user.is_authenticated %}
+                  <ul class="dropdown-menu dropdown-menu-end">
+                      <h5 class="ms-2">{{ request.user.username }}</h5>
+                      <hr class="mb-0">
+                      <li class="ms-1"><a class="ms-2" href="{% url 'users:profile' %}">Profile</a></li>
+                      <li class="ms-1"><a class="ms-2" href="">Friends</a></li>
+                      <li class="ms-1"><a class="ms-2" href="">My Reviews</a></li>
+                      <li class="ms-1"><a class="ms-2" href="}">Contact</a></li>
+                      <hr class="my-2">
+                      <li class="ms-1"><a class="ms-2" href="{% url 'users:logout' %}">Logout</a></li>
+                  </ul>
+              {% endif %}
+            </div>
         </li>
       </ul>
 {#      <ul class="navbar-nav mb-2 mb-lg-0">#}

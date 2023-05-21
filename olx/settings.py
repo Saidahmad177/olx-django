@@ -21,7 +21,7 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
-SITE_ID = 1
+SITE_ID = 2
 
 # Application definition
 
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
 
 
 ]
@@ -63,7 +64,7 @@ SOCIALACCOUNT_PROVIDERS = {
         },
     },
 }
-
+LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'users:login'
 LOGOUT_REDIRECT_URL = '/'
 
