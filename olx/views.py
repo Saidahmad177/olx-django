@@ -1,5 +1,6 @@
+from django.contrib import messages
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 
 from ads.models import Category, Ad, CategoryCity
@@ -37,3 +38,8 @@ class SearchPageView(View):
             'search_result_count': search_results.count(),
         }
         return render(request, 'search.html', context)
+
+
+def signup_redirect(request):
+    messages.info(request, "Bu yerda nimadir noto'g'ri, sizda allaqachon hisob qaydnomangiz bor bo'lishi mumkin", extra_tags='danger')
+    return redirect('home')

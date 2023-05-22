@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from olx.views import HomePageView, SearchPageView
+from olx.views import HomePageView, SearchPageView, signup_redirect
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
@@ -13,6 +13,8 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+
+    path('accounts/social/signup/', signup_redirect, name='signup_redirect'),
     path('accounts/', include('allauth.urls')),
 ]
 

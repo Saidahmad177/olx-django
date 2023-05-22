@@ -56,6 +56,13 @@
                       <input type="email" id="form2Example17" class="border-bottom-dark" name="email" value="{{ form.data.email }}" placeholder="Email*" required="required"  oninvalid="this.setCustomValidity('To\'g\'ri Email kiritganingizga ishonch hosil qiling')" oninput="setCustomValidity('')"/>
                   </div>
                   <div class="form-outline mb-4">
+                      <input type="text" id="phone_number_id" class="border-bottom-dark" name="phone_number" value="{{ form.data.phone_number }}" placeholder="Telefon raqami, Masalan 912345678" required="required"  oninvalid="this.setCustomValidity('Bu maydonni to\'ldirish talab etiladi')" oninput="setCustomValidity('')"/>
+                      {% if form.phone_number.errors %}
+                          <p class="text-danger">{{ form.phone_number.errors|striptags }}</p>
+                          <script>document.getElementById('phone_number_id').focus();</script>
+                      {% endif %}
+                  </div>
+                  <div class="form-outline mb-4">
                     <input type="password" id="myInput" class="border-bottom-dark" name="password" placeholder="Password*" value="{{ form.data.password }}" required="required"  oninvalid="this.setCustomValidity('Bu maydonni to\'ldirish talab etiladi')" oninput="setCustomValidity('')"/>
                     <span style="position: absolute; display: inline-block; right: 54px; margin-top: 14px">
                         <i class="far fa-eye" id="myInput" onclick="myFunction()" style="cursor: pointer;"></i>

@@ -82,7 +82,7 @@ class UserAdsView(LoginRequiredMixin, View):
 class ShowUserView(View):
     def get(self, request, id, username):
         user_id = CustomUser.objects.get(username=username)
-        user_ads = Ad.objects.filter(user=id)
+        user_ads = Ad.objects.filter(user=id).order_by('-id')
         search_result = 0
 
         search = request.GET.get('q', '')

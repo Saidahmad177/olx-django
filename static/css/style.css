@@ -117,10 +117,15 @@ footer hr{height: 2px; background-color: black}
 .show-user-search input{width: 50%; padding: 22px 10px}
 .search-field-2{width: 60%; margin: 40px 0}
 .search-field-2 button{width: 30%}
+.detail-user img{width: 60px; height: 60px}
+.login-btn-reverse{background: #fff; color: #002f34; border-radius: 3px; width: 100%; padding: 10px 0; box-shadow: inset 0 0 0 2px #002f34;}
+.login-btn-reverse:hover{box-shadow: inset 0 0 0 4px}
+
 
 @media (max-width:991px) {
     .body-div{min-height: 50%}
     input{width: 66%}
+    .item_not_showing{display: none}
     .search-button{padding: 20px 10px}
     .search-field-inline{padding: 50px 20px}
     .card-image{height: 160px}
@@ -145,6 +150,7 @@ footer hr{height: 2px; background-color: black}
     .show-user-search input{width: 76%}
     .search-field-2{width: 100%}
     .search-field-2 button{width: 70%; margin-left: 50px}
+    .detail-property{text-align: center; margin: 40px 0 20px}
 
 
 }

@@ -1,6 +1,7 @@
 from django.urls import path
 
-from users.views import SignUpView, SignInView, logout_user, ProfileView, UserAdsView, ShowUserView
+from users.views import SignUpView, SignInView, logout_user, ProfileView, UserAdsView, \
+    ShowUserView
 
 app_name = 'users'
 urlpatterns = [

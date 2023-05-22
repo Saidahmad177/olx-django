@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div style="height: 90px">
+            <h2 class="pt-4">E'lonni yangilash</h2>
+        </div>
+        <form method="post" enctype="multipart/form-data">{% csrf_token %}
+            <div class="post-add-form">
+                <div style="background: #fff;">
+                    <div class="mb-4 px-4 pt-4">
+                        <h5>Sarlavha</h5>
+                        <input type="text" name="title" value="{% if form.errors %}{{ form.data.title }}{% else %}{{ update_item.title }}{% endif %}" placeholder="Sarlavhani kiriting*" required>
+                    </div>
+
+                    <div class="px-4 mb-4">
+                    <h5>Kategoriya</h5>
+                        <select class="styled-select" name="category" id="category">
+                            {% if not form.errors %}
+                                <option value="{{ update_item.category.id }}" selected>{{ update_item.category }}</option>
+                                {% for category in global_all_category %}
+                                    {% if category.id == update_item.category.id %}
+                                    {% comment %}{% endcomment %}
+                                    {% else %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {% for category in form.category.field.choices %}
+                                    <option value="{{ category.0 }}" {% if category.0 == form.category.value %}selected{% endif %}>{{ category.1 }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        {% if form.category.errors %}
+                            <p class="text-danger">{{ form.category.errors|striptags }}</p>
+                            <script>document.getElementById('category').focus();</script>
+                        {% endif %}
+                    </div>
+
+                    <div class="price-input mb-4 px-4 pb-4">
+                        <h5>Narx</h5>
+                        <input id="price" name="price" type="text" min="1" max="99999999999999999" value="{% if form.errors %}{{ form.data.price }}{% else %}{{ update_item.price }}{% endif %}" placeholder="Narx*" required>
+                        <select class="styled-select" name="currency" id="">
+                            <option value="So'm" selected>So'm</option>
+                            <option value="$">$</option>
+                        </select>
+                        {% if form.price.errors %}
+                            <p class="text-danger">{{ form.price.errors|striptags }}</p>
+                            <script>document.getElementById('price').focus();</script>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div style="background: #fff;">
+                    <div class="row p-4">
+                        <h5 class="my-3">Rasmlar</h5>
+                        <p>Birinchi surat e’loningiz asosiy rasmi bo’ladi.</p>
+                        <div class="dropzone mt-3 mx-2 col-lg-3 col-sm-6 col-6">
+                            <span><i class="fa-regular fa-image upload-icon"></i></span>
+                            <input type="file" name="image" class="upload-input" />
+                        </div>
+                        <div class="dropzone mt-3 mx-2 col-lg-3 col-sm-6 col-6">
+                            <span><i class="fa-regular fa-image upload-icon"></i></span>
+                            <input type="file" name="image2" class="upload-input" />
+                        </div>
+                        <div class="dropzone mt-3 mx-2 col-lg-3 col-sm-6 col-6">
+                            <span><i class="fa-regular fa-image upload-icon"></i></span>
+                            <input type="file" name="image3" class="upload-input" />
+                        </div>
+                        <div class="dropzone mt-3 mx-2 col-lg-3 col-sm-6 col-6">
+                            <span><i class="fa-regular fa-image upload-icon"></i></span>
+                            <input type="file" name="image4" class="upload-input" />
+                        </div>
+                    </div>
+                </div>
+                <div style="background: #fff;" class="mt-4 p-4">
+                    <h5>Tavsif</h5>
+                    <textarea name="description" id="id_description" cols="30" rows="10" placeholder="Tavsif*" required>{% if form.errors %}{{ form.description.value|default:'' }}{% else %}{{ update_item.description }}{% endif %}</textarea>
+                </div>
+                <div style="background: #fff;" class="mt-4 p-4">
+                    <h5>Joylashuv</h5>
+                    <div class="mb-4">
+                        {% if not form.errors %}
+                            <select class="styled-select" name="category_city" id="cat_city">
+                                <option value="{{ update_item.category_city.id }}">{{ update_item.category_city.name }}</option>
+                                {% for city in global_category_city %}
+                                    {% if city.name == update_item.category_city.name %}
+                                        {% comment %}{% endcomment %}
+                                    {% else %}
+                                        <option id="" value="{{ city.id }}">{{ city.name }}</option>
+                                    {% endif %}
+
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <select class="styled-select" name="category_city" id="cat_city">
+                                {% for city in form.category_city.field.choices %}
+                                  <option id="" value="{{ city.0 }}" {% if city.0 == form.category_city.value %}selected{% endif %}>{{ city.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        {% endif %}
+                        {% if form.category_city.errors %}
+                            <p class="text-danger">{{ form.category_city.errors|striptags }}</p>
+                            <script>document.getElementById('cat_city').focus();</script>
+                        {% endif %}
+                    </div>
+                    <div class="phone-number mb-4">
+                        <h5>Telefon raqami </h5>
+                        <input type="text" name="phone_number" id="phone_num" min="9" max="9" value="{% if form.errors %}{{ form.phone_number.value }}{% else %}{{ update_item.phone_number }}{% endif %}" placeholder="Masalan, 987654321" required>
+                        {% if form.phone_number.errors %}
+                            <p class="text-danger">{{ form.phone_number.errors|striptags }}</p>
+                            <script>document.getElementById('phone_num').focus();</script>
+                        {% endif %}
+                    </div>
+                    <button class="button post-add-btn" type="submit">E'lonni o'zgartirish</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

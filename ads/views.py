@@ -1,9 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import View
 from hitcount.utils import get_hitcount_model
 from hitcount.views import HitCountMixin
+from requests import delete
 
 from ads.forms import AdForm
 from ads.models import Category, CategoryCity, Ad
@@ -45,6 +47,33 @@ class CreateAd(LoginRequiredMixin, View):
             return render(request, 'ads/CRUD/create_ad.html', {'form': form, 'select_val': select_value})
 
 
+class UpdateAdView(View):
+    def get(self, request, slug):
+        update_item = Ad.objects.get(slug=slug)
+        if not request.user == update_item.user:
+            return redirect('home')
+        context = {
+            'update_item': update_item,
+        }
+
+        return render(request, 'ads/CRUD/update_ad.html', context)
+
+    def post(self, request, slug):
+        item = Ad.objects.get(slug=slug)
+
+        form = AdForm(instance=item, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "E'loningiz yangilandi")
+            return redirect(reverse('ads:detail',
+                                    kwargs={
+                                        'category': item.category.slug,
+                                        'slug': item.slug}))
+        else:
+            form = AdForm(data=request.POST)
+            return render(request, 'ads/CRUD/update_ad.html', {'form': form})
+
+
 class DetailAdView(View):
     def get(self, request, category, slug):
         item = Ad.objects.get(slug=slug)
@@ -67,6 +96,12 @@ class DetailAdView(View):
             'category': category,
         }
         return render(request, 'ads/detail.html', context)
+
+    def post(self, reqeust, category, slug):
+        get_item = Ad.objects.get(slug=slug)
+        get_item.delete()
+        messages.success(reqeust, "E'loningiz o'chirib tashlandi")
+        return redirect('home')
 
 
 class CategoryItems(View):

@@ -21,10 +21,38 @@
                         </a>
                     {% endif %}
                 </div>
-                <div class="col-lg-9 col-md-8 col-sm-7 col-7">
+                <div class="col-lg-6 col-md-8 col-sm-7 col-7">
                     <h5><a href="{% url 'ads:detail' user_ad.category.slug user_ad.slug %}">{{ user_ad.title }}</a></h5>
                     <p><b>{{ user_ad.price }} {{ user_ad.currency }}</b></p>
                     <p><small>{{ user_ad.category_city.name }} - {{ user_ad.created_time|date:'Y-m-d' }}</small></p>
+                </div>
+                <div class="col-lg-3 col-sm-12 col-12 text-center my-2">
+                    <a href="{% url 'ads:update' user_ad.slug %}">
+                        <span><i class="fa-regular fa-pen-to-square px-2"></i>Tahrirlash</span>
+                    </a> |
+                    <a class="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <span class=""><i class="fa-solid fa-trash-can px-2"></i>O'chirish</span>
+                    </a>
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">E'lonni o'chirish!</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            Ushbu e'lonni o'chirib tashlamoqchimisiz?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Yo'q</button>
+                              <form method="post" action="{% url 'ads:detail' user_ad.category.slug user_ad.slug %}">{% csrf_token %}
+                                <button type="submit" class="btn btn-danger px-4">Ha</button>
+                              </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                 </div>
             </div>
         {% endfor %}

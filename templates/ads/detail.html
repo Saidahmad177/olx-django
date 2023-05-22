@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load humanize %}
 {% load custom_filters %}
 {% load hitcount_tags %}
@@ -23,7 +24,7 @@
             <div class="row">
                 <div class="col-lg-8 col-sm-12">
                     {% if detail.image %}
-                        <div style="background: #fff" id="carouselExampleIndicators" class="carousel slide mb-3" data-bs-touch="true">
+                        <div style="background: #fff" id="carouselExampleIndicators" class="carousel slide mb-4" data-bs-touch="true">
                             <div class="carousel-indicators">
                                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                                 {% if detail.image2 %}
@@ -66,7 +67,7 @@
                             </button>
                         </div>
                     {% endif %}
-                    <div class="my-4" style="background: #fff">
+                    <div class="mb-4" style="background: #fff">
                         <div class="p-4">
                             <p><small>Joylashtirildi {{ detail.created_time|date:'Y-m-d' }}</small></p>
                             <h2 style="font-family: inherit; font-weight: normal;">{{ detail.title }}</h2>
@@ -74,21 +75,116 @@
                             <h4>TAVSIF</h4>
                             <p>{{ detail.description }}</p>
                             <hr>
-                            <div class="row">
-                                <div class="col-5">
+                            <div class=" row">
+                                <div class="col-lg-5 col-sm-5 col-5">
                                     <span><small>ID: {{ detail.id }}</small></span>
                                 </div>
-                                <div class="col-7">
+                                <div class="col-lg-3 col-sm-6 col-6">
                                     <span><small>Ko'rishlar: {% get_hit_count for detail %}</small></span>
                                 </div>
+                                <div class="detail-property col-lg-4 col-sm-12 col-12">
+                                    {% if detail.user == request.user %}
+                                        <a href="{% url 'ads:update' detail.slug %}">
+                                            <span><i class="fa-regular fa-pen-to-square px-2"></i>Tahrirlash</span>
+                                        </a> |
+                                        <a class="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                            <span class=""><i class="fa-solid fa-trash-can px-2"></i>O'chirish</span>
+                                        </a>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">E'lonni o'chirish!</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div>
+                                              <div class="modal-body">
+                                                Ushbu e'lonni o'chirib tashlamoqchimisiz?
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Yo'q</button>
+                                                  <form method="post" action="{% url 'ads:detail' detail.category.slug detail.slug %}">{% csrf_token %}
+                                                    <button type="submit" class="btn btn-danger px-4">Ha</button>
+                                                  </form>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4 p-3" style="background: #fff">
+                        <div class="row detail-user">
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    <h5 class="mb-3">Sotuvchiga murojat qilish</h5>
+                                    <div class="col-3">
+                                        <a href="{% url 'users:show_user' detail.user.id detail.user.username %}">
+                                            <img src="{% static 'images/avatar.jpg' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="col-8">
+                                        <h5>
+                                            <a href="{% url 'users:show_user' detail.user.id detail.user.username %}">
+                                                {{ detail.user.username }}
+                                            </a>
+                                        </h5>
+                                        <p><small> OLXda <b>{{ detail.user.date_joined|date:'M d, Y' }}</b> dan beri</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <button class="button w-100 login-btn">Xabar yozish</button>
+
+                                <h5 class="mt-4"><i class="fa-solid fa-phone me-3"></i>
+                                    <span class="ms-5">
+                                        <a href="tel:+998{{ detail.user.phone_number }}" class="text-end a-rm-bg" type="phone_number">
+                                            +998 {{ detail.user.phone_number }}
+                                        </a>
+                                    </span>
+                                </h5>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-12">
+                    <div class="p-4 detail-user item_not_showing" style="background: #fff">
+                        <h4>Foydalanuvchi</h4>
+                        <div class="row">
+                            <div class="col-3">
+                                <a href="{% url 'users:show_user' detail.user.id detail.user.username %}">
+                                    <img src="{% static 'images/avatar.jpg' %}" alt="">
+                                </a>
+                            </div>
+                            <div class="col-8">
+                                <h5>
+                                    <a href="{% url 'users:show_user' detail.user.id detail.user.username %}">
+                                        {{ detail.user.username }}
+                                    </a>
+                                </h5>
+                                <p><small> OLXda <b>{{ detail.user.date_joined|date:'M d, Y' }}</b> dan beri</small></p>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-lg-6">
+                                <button class="button login-btn-reverse">+998 {{ detail.user.phone_number }}</button>
+                            </div>
+                            <div class="col-lg-6">
+                                <button class="button login-btn">Xabar yozish</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 mt-4" style="background: #fff">
+                        <h4 class="mb-4">Joylashuv</h4>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span class="ms-3">{{ detail.category_city }}</span>
 
+                    </div>
                 </div>
            </div>
+
         </div>
     </div>
 
