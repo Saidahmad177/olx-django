@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     # local app
     'ads',
     'users',
+    'chat',
 
     # external
     'ckeditor',

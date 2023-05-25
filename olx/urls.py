@@ -9,13 +9,15 @@ urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
     path('ads/', include('ads.urls')),
     path('users/', include('users.urls')),
-    path('search/', SearchPageView.as_view(), name='search'),
+    path('chat/', include('chat.urls')),
 
+    path('search/', SearchPageView.as_view(), name='search'),
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 
     path('accounts/social/signup/', signup_redirect, name='signup_redirect'),
     path('accounts/', include('allauth.urls')),
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

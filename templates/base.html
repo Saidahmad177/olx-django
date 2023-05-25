@@ -15,7 +15,7 @@
     <title>{% block title %}{% endblock %}Olx e'lonlar taxtasi</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary py-1 sticky-top" style="background: #002f34 !important; color: white !important;">
+<nav class="navbar navbar-expand-lg bg-body-tertiary py-1 fixed-top" style="background: #002f34 !important; color: white !important;">
   <div class="container-fluid container">
     <a class="navbar-brand" href="/">
         <img src="{% static 'images/olx-logo.png' %}" alt="olx" width="55" height="55">
@@ -32,7 +32,7 @@
       <div class="offcanvas-body">
       <ul class="navbar-nav me-auto mt-1 mb-3 mb-lg-0">
         <li class="nav-item">
-          <a href="#" class="nav-link me-5 nav-btn a-rm-bg">
+          <a href="{% url 'chat-home' %}" class="nav-link me-5 nav-btn a-rm-bg">
               <i class="fa-regular fa-comment me-3"></i>Xabarlar
           </a>
         </li>
@@ -55,9 +55,9 @@
                       <h5 class="ms-2">{{ request.user.username }}</h5>
                       <hr class="mb-0">
                       <li class="ms-1"><a class="ms-2" href="{% url 'users:profile' %}">Profile</a></li>
-                      <li class="ms-1"><a class="ms-2" href="">Xabarlar</a></li>
+                      <li class="ms-1"><a class="ms-2" href="{% url 'chat-home' %}">Xabarlar</a></li>
                       <li class="ms-1"><a class="ms-2" href="{% url 'users:my-ads' %}">E'lonlar</a></li>
-                      <li class="ms-1"><a class="ms-2" href="">Contact</a></li>
+                      <li class="ms-1"><a class="ms-2" href="{% url 'users:contact-us' %}">Contact</a></li>
                       <hr class="my-2">
                       <li class="ms-1"><a class="ms-2" href="{% url 'users:logout' %}">Logout</a></li>
                   </ul>
@@ -74,6 +74,7 @@
     </div>
   </div>
 </nav>
+<div style="margin-bottom: 100px"></div>
     {% if messages %}
         <div class="container">
         {% for message in messages %}

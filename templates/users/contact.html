@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %} Biz bilan bog'lanish - {% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div style="height: 90px">
+            <h2 class="pt-4">Biz bilan bog'lanish</h2>
+        </div>
+        <form method="post">{% csrf_token %}
+            <div class="post-add-form">
+                <div class="mb-4" style="background: #fff;">
+                    <div class="mb-4 px-4 pt-4">
+                        <h5>Ismingiz</h5>
+                        <input type="text" name="name" value="{% if form.errors %}{{ form.data.name }}{% endif %}" placeholder="Ismingiz*" required>
+                    </div>
+                    <div class="mb-4 px-4 pt-2">
+                        <h5>Email</h5>
+                        <input type="email" name="email" value="{% if form.errors %}{{ form.data.email }}{% endif %}" placeholder="Email*" required>
+                    </div>
+                    <div style="background: #fff;" class="mt-4 p-4">
+                        <h5>Xabar matni</h5>
+                        <textarea name="description" id="id_description" cols="30" rows="10" placeholder="Xabar matni*" required>{% if form.errors %}{{ form.description.value }}{% endif %}</textarea>
+                    </div>
+                    <div class="phone-number mb-4 ps-4">
+                        <h5>Telefon raqami </h5>
+                        <input type="text" name="phone_number" id="phone_num" min="9" max="9" value="{% if form.errors %}{{ form.phone_number.value }}{% else %}{% endif %}" placeholder="Masalan, 987654321" required>
+                        {% if form.phone_number.errors %}
+                            <p class="text-danger">{{ form.phone_number.errors|striptags }}</p>
+                            <script>document.getElementById('phone_num').focus();</script>
+                        {% endif %}
+                    </div>
+                    <button class="button post-add-btn m-4" type="submit">Yuborish</button>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 from django import forms
 
-from users.models import CustomUser
+from users.models import CustomUser, Contact
 
 
 class RegisterForm(forms.ModelForm):
@@ -54,3 +54,20 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ('first_name', 'last_name', 'username', 'email')
+
+
+class ContactForm(forms.ModelForm):
+    phone_number = forms.IntegerField(
+        min_value=100000000, max_value=999999999,
+        error_messages={
+            'required': "Bu maydonni to'ldirish talab qilinadi",
+            "invalid": "Iltiomos to'g'ri raqam kiriting!",
+            'max_value': "Raqam 9tadan ko'p yoki kam bo'lmasligi kerak",
+            'min_value': "Raqam 9tadan ko'p yoki kam bo'lmasligi kerak",
+        },
+
+    )
+
+    class Meta:
+        model = Contact
+        fields = ('name', 'email', 'description', 'phone_number')

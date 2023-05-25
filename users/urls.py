@@ -1,7 +1,7 @@
 from django.urls import path
 
 from users.views import SignUpView, SignInView, logout_user, ProfileView, UserAdsView, \
-    ShowUserView
+    ShowUserView, ContactView
 
 app_name = 'users'
 urlpatterns = [
@@ -10,5 +10,6 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('my-ads/', UserAdsView.as_view(), name='my-ads'),
+    path('contact-us/', ContactView.as_view(), name='contact-us'),
     path('show/<int:id>-<str:username>/', ShowUserView.as_view(), name='show_user'),
 ]

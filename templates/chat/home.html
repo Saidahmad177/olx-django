@@ -1,0 +1,293 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/olx-icon.png' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>{% block title %}{% endblock %}Olx e'lonlar taxtasi</title>
+<style>
+    .time-right {
+    float: right;
+    color: #aaa;
+    }
+
+    .time-left {
+    float: left;
+    color: #999;
+
+    }
+    input[type=text], select {
+    width: 75%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    }
+
+    .input-btn {
+    width: 20%;
+    background-color: #002f34;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    }
+
+    .div-padding {
+    border-radius: 5px;
+    padding: 10px;
+        overflow-y: auto;
+    }
+</style>
+
+<script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary py-1 fixed-top" style="background: #002f34 !important; color: white !important;">
+  <div class="container-fluid container">
+    <a class="navbar-brand" href="/">
+        <img src="{% static 'images/olx-logo.png' %}" alt="olx" width="55" height="55">
+    </a>
+      <div class="clear" style="width: 46%"></div>
+    <a style="color: #fff; !important;" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fa-solid fa-bars"></i></span>
+    </a>
+    <div class="offcanvas offcanvas-end text-bg-dark" id="navbarSupportedContent">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Olx</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+      <div class="offcanvas-body">
+      <ul class="navbar-nav me-auto mt-1 mb-3 mb-lg-0">
+        <li class="nav-item">
+          <a href="{% url 'chat-home' %}" class="nav-link me-5 nav-btn a-rm-bg">
+              <i class="fa-regular fa-comment me-3"></i>Xabarlar
+          </a>
+        </li>
+        <li class="nav-item">
+
+            <div class="nav-item dropdown">
+              {% if request.user.is_authenticated %}
+                  <div class="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <a href="#" class="nav-link nav-btn dropdown-toggle a-rm-bg">
+                          <i class="fa-regular fa-user me-3"></i>Hisobingiz
+                      </a>
+                  </div>
+              {% else %}
+                      <a href="{% url 'users:login' %}" class="nav-link nav-btn a-rm-bg">
+                          <i class="fa-regular fa-user me-3"></i>Hisobingiz
+                      </a>
+              {% endif %}
+              {% if request.user.is_authenticated %}
+                  <ul class="dropdown-menu dropdown-menu-end">
+                      <h5 class="ms-2">{{ request.user.username }}</h5>
+                      <hr class="mb-0">
+                      <li class="ms-1"><a class="ms-2" href="{% url 'users:profile' %}">Profile</a></li>
+                      <li class="ms-1"><a class="ms-2" href="">Xabarlar</a></li>
+                      <li class="ms-1"><a class="ms-2" href="{% url 'users:my-ads' %}">E'lonlar</a></li>
+                      <li class="ms-1"><a class="ms-2" href="{% url 'users:contact-us' %}">Contact</a></li>
+                      <hr class="my-2">
+                      <li class="ms-1"><a class="ms-2" href="{% url 'users:logout' %}">Logout</a></li>
+                  </ul>
+              {% endif %}
+            </div>
+        </li>
+      </ul>
+          <a href="{% url 'ads:create' %}"><button class="navbar-nav button add-btn me-5">E'lon berish</button></a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div style="margin-bottom: 100px"></div>
+
+<div class="container my-5">
+<h3 class="my-4">Xabarlar</h3>
+    <div class="row">
+        <div class="col-lg-6" style="min-height: 500px; background: white">
+
+            <div class="p-3">
+                {% if user_in_room %}
+                    {% for i in user_in_room %}
+                        <div class="my-3 p-3 ps-4" style="background: #E9FCFB; border-top-color: black">
+                            <h3><a href="{% url 'checkview2' i.receiver.id %}">{{ i.receiver }}</a></h3>
+
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if user_in_room2 %}
+                    {% for i in user_in_room2 %}
+                        <div class="my-3 p-3 ps-4" style="background: #E9FCFB; border-top-color: black">
+                            <h3><a href="{% url 'checkview2' i.sender.id %}">{{ i.sender }}</a></h3>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if not exists_user %}
+                    <h2 class="text-center">Xabarlar mavjud emas...</h2>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 item_not_showing" style="border: 3px solid #ddd">
+            <div class="div-padding" id="display" style="min-height: 360px; max-height: 360px ;overflow-y: scroll; overflow-x: hidden">
+            </div>
+            <div class="mt-3 div-padding">
+
+                    <input type="hidden" name="username" id="username" value="{{request.user}}"/>
+                    <input type="hidden" name="room_id" id="room_id" value="{{room_details.id}}"/>
+                    <input type="text" name="message" id="message" placeholder="Xabaringizni yozing.." width="100px" />
+                    <input class="input-btn" value="Send">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{#<script>#}
+{#$(document).ready(function(){#}
+{##}
+{#setInterval(function(){#}
+{#    $.ajax({#}
+{#        type: 'GET',#}
+{#        url : "/chat/getMessages2/{{receiver_id}}/",#}
+{#        success: function(response){#}
+{#            console.log(response);#}
+{#            console.log('successs')#}
+{#            $("#display").empty();#}
+{#            for (var key in response.messages) {#}
+{##}
+{#                var message = response.messages[key];#}
+{#                var formattedTime = message.date;#}
+{##}
+{#                console.log(message.username + ' username')#}
+{##}
+{#                if (message.username === "{{ request.user.username }}"){#}
+{#                    var temp =#}
+{#                        "<div class=' row div-padding'>" +#}
+{#                            "<div class='col-7'>" + "</div>" +#}
+{#                            "<div class='container col-5 div-padding' style='background: #ceddff;'>" +#}
+{#                                "<p>" + message.value + "</p>" +#}
+{#                                "<span class='time- right'>" +#}
+{#                                "<small>" + formattedTime + "</small>" +#}
+{#                                "</span>" +#}
+{#                            "</div>" +#}
+{#                        "</div>";#}
+{##}
+{#                }#}
+{#                else {#}
+                    {#var temp = "<div class='container'><b>" + message.username + "</b><p>" + message.value + "</p><span class='time- left'>" + formattedTime + "</span></div>";#}
+{#                    var temp =#}
+{#                        "<div class=' row div-padding'>" +#}
+                            {#"<b>" + message.username + "</b>" +#}
+{#                            "<div class='container col-5 div-padding' style='background: #d1d5d7'>" +#}
+{#                                "<p>" + message.value + "</p>" +#}
+{#                                "<span class='time- right'>" +#}
+{#                                "<small>" + formattedTime + "</small>" +#}
+{#                                "</span>" +#}
+{#                            "</div>" +#}
+{#                        "<div class='col-7'>" + "</div>" +#}
+{#                        "</div>";#}
+{#                }#}
+{##}
+{#                $("#display").append(temp);#}
+{#            }#}
+{##}
+{##}
+{#            var scrollableContainer = document.getElementById('display');#}
+{#            scrollableContainer.scrollTop = scrollableContainer.scrollHeight;#}
+{#        },#}
+{##}
+{#        error: function(response){#}
+{#            console.log(response)#}
+{#            alert('An error occured')#}
+{#        }#}
+{#    });#}
+{#},300);#}
+{#})#}
+{#</script>#}
+
+<footer class="black-line text-center text-lg-start text-white" style="background: #f2f4f5">
+    <div class="px-4 container p-4">
+        <div class="row">
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-3 mt-1">
+              <p class="my-1"><a class="" title="Mobil ilovalar">Mobil ilovalar</a></p>
+              <p class="my-1"><a class="" title="Yordam">Yordam</a></p>
+              <p class="my-1"><a class="" title="Pullik xizmatlar">Pullik xizmatlar</a></p>
+              <p class="my-1"><a class="" title="OLX da biznes">OLX da biznes</a></p>
+              <p class="my-1"><a class="" title="Foydalanish shartlari">Foydalanish shartlari</a></p>
+              <p class="my-1"><a class="" title="Maxfiylik siyosati">Maxfiylik siyosati</a></p>
+              <p class="my-1"><a class="" title="Reklama narxlari">Reklama narxlari</a></p>
+          </div>
+          <!-- Grid column -->
+
+          <hr class="w-100 clearfix d-md-none" />
+
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-3 mt-1">
+            <p class="my-1"><a class="" title="Qanday sotib olish va sotish">Qanday sotib olish va sotish</a></p>
+            <p class="my-1"><a class="" title="Xavfsizlik qoidalari">Xavfsizlik qoidalari</a></p>
+            <p class="my-1"><a class="" title="Sayt xaritasi">Sayt xaritasi</a></p>
+            <p class="my-1"><a class="" title="Mintaqalar xaritasi">Mintaqalar xaritasi</a></p>
+            <p class="my-1"><a class="" title="Ommaviy so'rovlar">Ommaviy so'rovlar</a></p>
+            <p class="my-1"><a class="" title="Kariera">Kariera</a></p>
+            <p class="my-1"><a class="" title="Contact">Contact</a></p>
+          </div>
+          <!-- Grid column -->
+
+          <hr class="w-100 clearfix d-md-none"/>
+
+          <!-- Grid column -->
+          <div class="col-md-4 col-lg-4 mt-1">
+              <a target="_blank" href="https://play.google.com/store/apps/details?id=com.torg.torg&hl=ru&referrer=utm_source%3Dolx.uz%26utm_medium%3Dcpc%26utm_campaign%3Dandroid-app-footer"><img src="{% static 'images/g-play.jpg' %}" alt=""></a>
+              <a target="_blank" class="" href="https://itunes.apple.com/uz/app/torg.uz/id665094472?mt=8&ign-mpt=uo%3D4"><img src="{% static 'images/app-store.jpg' %}" alt=""></a>
+          </div>
+        </div>
+    </div>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</body>
+
+{#<script type="text/javascript">#}
+{#  $(document).on('submit','#post-form',function(e){#}
+{#    e.preventDefault();#}
+{##}
+{#    $.ajax({#}
+{#      type:'POST',#}
+{#      url:'/chat/send',#}
+{#      data:{#}
+{#          username:$('#username').val(),#}
+{#          room_id:$('#room_id').val(),#}
+{#          message:$('#message').val(),#}
+{#        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),#}
+{#      },#}
+{#      success: function(data){#}
+{#         //alert(data)#}
+{#      }#}
+{#    });#}
+{#    document.getElementById('message').value = ''#}
+{#  });#}
+{#</script>#}
+
+</html>

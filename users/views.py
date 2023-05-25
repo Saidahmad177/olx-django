@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 
 from ads.models import Ad
-from users.forms import RegisterForm, ProfileForm
+from users.forms import RegisterForm, ProfileForm, ContactForm
 from users.models import CustomUser
 
 
@@ -103,3 +103,20 @@ class ShowUserView(View):
         return render(request, 'users/show_user.html', context)
 
 
+class ContactView(View):
+    def get(self, request):
+        return render(request, 'users/contact.html')
+
+    def post(self, request):
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            contact = form.save(commit=False)
+            contact.user = request.user.username
+            contact.save()
+            messages.success(request, "Xabaringiz yuborildi.")
+
+            return redirect('users:contact-us')
+
+        print(form.errors)
+
+        return render(request, 'users/contact.html', {'form': form})

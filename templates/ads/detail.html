@@ -136,12 +136,12 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <button class="button w-100 login-btn">Xabar yozish</button>
+                                <a class="a-rm-bg" href="{% url 'checkview2' detail.user.id %}"><button class="button w-100 login-btn">Xabar yozish</button></a>
 
                                 <h5 class="mt-4"><i class="fa-solid fa-phone me-3"></i>
                                     <span class="ms-5">
-                                        <a href="tel:+998{{ detail.user.phone_number }}" class="text-end a-rm-bg" type="phone_number">
-                                            +998 {{ detail.user.phone_number }}
+                                        <a href="tel:+998{{ detail.phone_number }}" class="text-end a-rm-bg" type="phone_number">
+                                            +998 {{ detail.phone_number }}
                                         </a>
                                     </span>
                                 </h5>
@@ -172,7 +172,7 @@
                                 <button class="button login-btn-reverse">+998 {{ detail.user.phone_number }}</button>
                             </div>
                             <div class="col-lg-6">
-                                <button class="button login-btn">Xabar yozish</button>
+                                <a class="a-rm-bg" href="{% url 'checkview2' detail.user.id %}"><button class="button login-btn">Xabar yozish</button></a>
                             </div>
                         </div>
                     </div>
@@ -180,11 +180,41 @@
                         <h4 class="mb-4">Joylashuv</h4>
                         <i class="fa-solid fa-location-dot"></i>
                         <span class="ms-3">{{ detail.category_city }}</span>
-
                     </div>
                 </div>
            </div>
-
+            <div class="mt-4 mb-3">
+                <h3>Muallifning boshqa e'lonlari</h3>
+            </div>
+            <div class="row">
+                {% for ad in detail.user.ad_set.all|slice:"4" %}
+                    {% if ad.id == detail.id %}
+                        {% comment %}{% endcomment %}
+                    {% else %}
+                        <div class="col-lg-3 col-sm-6 col-6 mb-4">
+                          <div class="card">
+                              <a class="a-rm-bg" href="{% url 'ads:detail' ad.category.slug ad.slug %}">
+                                  <img class="card-img-top card-image"
+                                  src="{% if ad.image %}{{ ad.image.url }}
+                                  {% else %}{% static 'images/default_img.jpg' %}
+                                  {% endif %}" alt="">
+                              </a>
+                              <div class="card-body">
+                                  <div class="card-head-title">
+                                      <h6 class="card-title mb-4">
+                                          <a href="{% url 'ads:detail' ad.category.slug ad.slug %}">
+                                              {{ ad.title|truncatechars:52 }}
+                                          </a>
+                                      </h6>
+                                  </div>
+                                  <p class="card-text mb-1">{{ ad.category_city.name }} - {{ ad.created_time|date:'Y-m-d' }}</p>
+                                  <p><b>{{ ad.price|intcomma|replace_comma }} {{ ad.currency }}</b></p>
+                              </div>
+                          </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 
