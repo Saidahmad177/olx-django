@@ -51,12 +51,16 @@
                           <div class="card-head-title">
                                   <h6 class="card-title mb-4">
                                       <a href="{% url 'ads:detail' ad.category.slug ad.slug %}">
-                                          {{ ad.title|truncatechars:52 }}
+                                          {{ ad.title|truncatechars:46 }}
                                       </a>
                                   </h6>
                           </div>
                           <p class="card-text mb-1">{{ ad.category_city.name }} - {{ ad.created_time|date:'Y-m-d' }}</p>
-                          <p><b>{{ ad.price|intcomma|replace_comma }} {{ ad.currency }}</b></p>
+                          {% if ad.price %}
+                              <p><b>{{ ad.price|intcomma|replace_comma }} {{ ad.currency }}</b></p>
+                          {% else %}
+                              <p><b>Bepul</b></p>
+                          {% endif %}
                       </div>
                   </div>
                 </div>

@@ -12,7 +12,7 @@
             <div class="search-field">
                 <form action="{% url 'search' %}" method="get" role="search">
                     <div class="input-group search-field-inline">
-                        <input type="search" class="px-3 py-3" name="q" placeholder=" e'lonlar yoningizda" required aria-label="Search" aria-describedby="search-addon" />
+                        <input type="search" class="px-3 py-3" name="q" placeholder="{{ global_ad_count }} e'lonlar yoningizda" required aria-label="Search" aria-describedby="search-addon" />
                         <button class="btn btn-light search-button" type="submit">Qidiruv <i class="fas fa-search"></i></button>
                     </div>
                 </form>
@@ -71,9 +71,13 @@
                         <div class="p-4">
                             <p><small>Joylashtirildi {{ detail.created_time|date:'Y-m-d' }}</small></p>
                             <h2 style="font-family: inherit; font-weight: normal;">{{ detail.title }}</h2>
-                            <h1 class="py-2">{{ detail.price|intcomma|replace_comma }} {{ detail.currency }}</h1>
+                            {% if detail.price %}
+                                <h1 class="py-2">{{ detail.price|intcomma|replace_comma }} {{ detail.currency }}</h1>
+                            {% else %}
+                                <h1 class="py-2">Bepul</h1>
+                            {% endif %}
                             <h4>TAVSIF</h4>
-                            <p>{{ detail.description }}</p>
+                            <p>{{ detail.description|safe }}</p>
                             <hr>
                             <div class=" row">
                                 <div class="col-lg-5 col-sm-5 col-5">
@@ -203,7 +207,7 @@
                                   <div class="card-head-title">
                                       <h6 class="card-title mb-4">
                                           <a href="{% url 'ads:detail' ad.category.slug ad.slug %}">
-                                              {{ ad.title|truncatechars:52 }}
+                                              {{ ad.title|truncatechars:48 }}
                                           </a>
                                       </h6>
                                   </div>

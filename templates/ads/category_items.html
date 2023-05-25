@@ -8,7 +8,7 @@
         <div class="search-field">
             <form action="{% url 'search' %}" method="get" role="search">
                 <div class="input-group search-field-inline">
-                    <input type="search" class="px-3 py-3" name="q" placeholder=" e'lonlar yoningizda" required aria-label="Search" aria-describedby="search-addon" />
+                    <input type="search" class="px-3 py-3" name="q" placeholder="{{ global_ad_count }} e'lonlar yoningizda" required aria-label="Search" aria-describedby="search-addon" />
                     <button class="btn btn-light search-button" type="submit">Qidiruv <i class="fas fa-search"></i></button>
                 </div>
             </form>
@@ -43,7 +43,11 @@
                 <div class="col-lg-9 col-md-8 col-sm-7 col-7">
                     <h5><a href="{% url 'ads:detail' selected_category.slug category_item.slug %}">{{ category_item.title|truncatechars:150 }}</a></h5>
                     <div class="p-test-t">
-                        <p class="pt-2"><b>{{ category_item.price }} {{ category_item.currency }}</b></p>
+                        {% if category_item.price %}
+                            <p class="pt-2"><b>{{ category_item.price }} {{ category_item.currency }}</b></p>
+                        {% else %}
+                            <p class="pt-2"><b>Bepul</b></p>
+                        {% endif %}
                     </div>
                     <p><small>{{ category_item.category_city.name }} - {{ category_item.created_time|date:'Y-m-d' }}</small></p>
                 </div>
