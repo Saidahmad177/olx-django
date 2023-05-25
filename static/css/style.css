@@ -151,6 +151,7 @@ footer hr{height: 2px; background-color: black}
     .search-field-2{width: 100%}
     .search-field-2 button{width: 70%; margin-left: 50px}
     .detail-property{text-align: center; margin: 40px 0 20px}
+    .figure-margin{margin-right: 0 !important;}
 
 
 }
